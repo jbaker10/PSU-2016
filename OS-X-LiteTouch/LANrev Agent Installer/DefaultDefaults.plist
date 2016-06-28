@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>AbsoluteRemoteEnabled</key>
+	<false/>
+	<key>AbsoluteRemotePort</key>
+	<integer>5900</integer>
+	<key>AbsoluteRemoteUserConfirmationRequired</key>
+	<false/>
+	<key>AddPortToFirewallExeception</key>
+	<true/>
+	<key>AgentPort</key>
+	<integer>3970</integer>
+	<key>CheckAppleSoftwarePatches</key>
+	<false/>
+	<key>CheckSoftwarePatches</key>
+	<false/>
+	<key>CheckThirdPartySoftwarePatches</key>
+	<false/>
+	<key>ConnectTimeout</key>
+	<integer>10</integer>
+	<key>DisableOSSoftwareUpdates</key>
+	<false/>
+	<key>DownloadAppleSoftwarePatches</key>
+	<true/>
+	<key>ExecuteFileTimeout</key>
+	<integer>120</integer>
+	<key>HeartbeatInterval</key>
+	<integer>15</integer>
+	<key>InstallAgentPrefPane</key>
+	<true/>
+	<key>InventoryPushInterval</key>
+	<integer>720</integer>
+	<key>InventoryWithFonts</key>
+	<false/>
+	<key>InventoryWithPrinters</key>
+	<false/>
+	<key>InventoryWithServices</key>
+	<false/>
+	<key>InventoryWithStartupItems</key>
+	<false/>
+	<key>MountServerTimeout</key>
+	<integer>30</integer>
+	<key>RegisterWithBonjour</key>
+	<true/>
+	<key>SDServerAddress</key>
+	<string>172.16.163.130</string>
+	<key>SDServerCheckInterval</key>
+	<integer>60</integer>
+	<key>SDServerPort</key>
+	<integer>3971</integer>
+	<key>SDServerUniqueID</key>
+	<string>C713EE07-A9FF-4DD3-9F8F-87B5DA12FA75</string>
+	<key>SLFindFileIOThrottle</key>
+	<string>200:200</string>
+	<key>SLProccessScanInterval</key>
+	<integer>1</integer>
+	<key>SLServerAddress</key>
+	<string>172.16.163.130</string>
+	<key>SLServerCheckInterval</key>
+	<integer>60</integer>
+	<key>SLServerPort</key>
+	<integer>3971</integer>
+	<key>SLServerUniqueID</key>
+	<string>C713EE07-A9FF-4DD3-9F8F-87B5DA12FA75</string>
+	<key>ServerList</key>
+	<array>
+		<dict>
+			<key>ApplicationScanOptions</key>
+			<integer>1</integer>
+			<key>BasicInventoryOnly</key>
+			<false/>
+			<key>HeartbeatInterval</key>
+			<integer>15</integer>
+			<key>InventoryPushInterval</key>
+			<integer>720</integer>
+			<key>InventoryWithFonts</key>
+			<false/>
+			<key>InventoryWithPrinters</key>
+			<false/>
+			<key>InventoryWithStartupItems</key>
+			<false/>
+			<key>InventoryWithWinServices</key>
+			<false/>
+			<key>IsPrimary</key>
+			<true/>
+			<key>ScanApplicationFolder</key>
+			<true/>
+			<key>ScanForMissingPatches</key>
+			<true/>
+			<key>ScanForMissingThirdPartyPatches</key>
+			<false/>
+			<key>ScanInstallerReceipts</key>
+			<true/>
+			<key>ServerAddress</key>
+			<string>172.16.163.130</string>
+			<key>ServerPort</key>
+			<integer>3971</integer>
+			<key>ServerUniqueID</key>
+			<string>C713EE07-A9FF-4DD3-9F8F-87B5DA12FA75</string>
+		</dict>
+	</array>
+	<key>ServerPort</key>
+	<integer>3971</integer>
+	<key>SlowNetworkThreshold</key>
+	<integer>100</integer>
+	<key>UseCustomAgentName</key>
+	<false/>
+	<key>UserInfoLocked</key>
+	<false/>
+	<key>UserInfoName0</key>
+	<string>Client Information 1</string>
+	<key>UserInfoName1</key>
+	<string>Client Information 2</string>
+	<key>UserInfoName2</key>
+	<string>Client Information 3</string>
+	<key>UserInfoName3</key>
+	<string>Client Information 4</string>
+	<key>UserInfoName4</key>
+	<string>Client Information 5</string>
+	<key>UserInfoName5</key>
+	<string>Client Information 6</string>
+	<key>UserInfoName6</key>
+	<string>Client Information 7</string>
+	<key>UserInfoName7</key>
+	<string>Client Information 8</string>
+	<key>UserInfoName8</key>
+	<string>Client Information 9</string>
+	<key>UserInfoName9</key>
+	<string>Client Information 10</string>
+</dict>
+</plist>

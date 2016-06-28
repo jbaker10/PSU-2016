@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>AssetTag</key>
+	<string></string>
+	<key>Location</key>
+	<string></string>
+	<key>InstallPath</key>
+	<string></string>
+	<key>ResourcePath</key>
+	<string></string>
+	<key>PythonPath</key>
+	<string></string>
+	<key>NameIsDone</key>
+	<string>false</string>
+	<key>UserIsDone</key>
+	<string>false</string>
+	<key>RemoteIsDone</key>
+	<string>false</string>
+	<key>AbmanIsDone</key>
+	<string>false</string>
+	<key>GroupName</key>
+	<string></string>
+	<key>Language</key>
+	<string>English</string>
+	<key>TimeZone</key>
+	<string>America/New_York</string>
+	<key>ComputerNamePrefix</key>
+	<string>MH</string>
+	<key>Admins</key>
+	<array/>
+</dict>
+</plist>

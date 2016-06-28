@@ -1,0 +1,385 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		05E7A08816E8DC0B00D2DEA6 /* LoginLog.iconset in Resources */ = {isa = PBXBuildFile; fileRef = 05E7A08716E8DC0B00D2DEA6 /* LoginLog.iconset */; };
+		666278B916E627480054E8EB /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 666278B816E627480054E8EB /* Cocoa.framework */; };
+		666278C516E627480054E8EB /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 666278C316E627480054E8EB /* InfoPlist.strings */; };
+		666278C716E627480054E8EB /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 666278C616E627480054E8EB /* main.m */; };
+		666278CB16E627480054E8EB /* Credits.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 666278C916E627480054E8EB /* Credits.rtf */; };
+		666278CD16E627490054E8EB /* main.py in Resources */ = {isa = PBXBuildFile; fileRef = 666278CC16E627490054E8EB /* main.py */; };
+		666278CF16E627490054E8EB /* LLAppDelegate.py in Resources */ = {isa = PBXBuildFile; fileRef = 666278CE16E627490054E8EB /* LLAppDelegate.py */; };
+		666278D216E627490054E8EB /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 666278D016E627490054E8EB /* MainMenu.xib */; };
+		6669207716E67FC800C1BD51 /* LLBorderlessWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = 6669207616E67FC800C1BD51 /* LLBorderlessWindow.m */; };
+		66C62FE116E64529002B7100 /* LLLogWindowController.py in Resources */ = {isa = PBXBuildFile; fileRef = 66C62FE016E64529002B7100 /* LLLogWindowController.py */; };
+		D21EDAD31901C9920046B99E /* check.png in Resources */ = {isa = PBXBuildFile; fileRef = D21EDAD21901C9920046B99E /* check.png */; };
+		D21EDAD61901D48B0046B99E /* next.tiff in Resources */ = {isa = PBXBuildFile; fileRef = D21EDAD41901D48B0046B99E /* next.tiff */; };
+		D21EDAD71901D48B0046B99E /* nextPressed.tiff in Resources */ = {isa = PBXBuildFile; fileRef = D21EDAD51901D48B0046B99E /* nextPressed.tiff */; };
+		D26C1DED1901775200B59088 /* libpython2.7.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = D26C1DEC1901775200B59088 /* libpython2.7.dylib */; };
+		D2F6A7C01901A0F800CDEE66 /* BashCommand.m in Sources */ = {isa = PBXBuildFile; fileRef = D2F6A7BF1901A0F800CDEE66 /* BashCommand.m */; };
+		D2F6A7C21901AA6C00CDEE66 /* FoundationPlist.py in Resources */ = {isa = PBXBuildFile; fileRef = D2F6A7C11901AA6C00CDEE66 /* FoundationPlist.py */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		05E7A08716E8DC0B00D2DEA6 /* LoginLog.iconset */ = {isa = PBXFileReference; lastKnownFileType = folder.iconset; path = LoginLog.iconset; sourceTree = "<group>"; };
+		666278B516E627480054E8EB /* LoginLog.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = LoginLog.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		666278B816E627480054E8EB /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
+		666278BD16E627480054E8EB /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
+		666278BE16E627480054E8EB /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
+		666278BF16E627480054E8EB /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		666278C216E627480054E8EB /* LoginLog-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "LoginLog-Info.plist"; sourceTree = "<group>"; };
+		666278C416E627480054E8EB /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		666278C616E627480054E8EB /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		666278C816E627480054E8EB /* LoginLog-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "LoginLog-Prefix.pch"; sourceTree = "<group>"; };
+		666278CA16E627480054E8EB /* en */ = {isa = PBXFileReference; lastKnownFileType = text.rtf; name = en; path = en.lproj/Credits.rtf; sourceTree = "<group>"; };
+		666278CC16E627490054E8EB /* main.py */ = {isa = PBXFileReference; lastKnownFileType = text.script.python; path = main.py; sourceTree = "<group>"; };
+		666278CE16E627490054E8EB /* LLAppDelegate.py */ = {isa = PBXFileReference; lastKnownFileType = text.script.python; path = LLAppDelegate.py; sourceTree = "<group>"; };
+		666278D116E627490054E8EB /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/MainMenu.xib; sourceTree = "<group>"; };
+		6669207516E67FC800C1BD51 /* LLBorderlessWindow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LLBorderlessWindow.h; sourceTree = "<group>"; };
+		6669207616E67FC800C1BD51 /* LLBorderlessWindow.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LLBorderlessWindow.m; sourceTree = "<group>"; };
+		66C62FE016E64529002B7100 /* LLLogWindowController.py */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.python; path = LLLogWindowController.py; sourceTree = "<group>"; };
+		D21EDAD21901C9920046B99E /* check.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = check.png; sourceTree = "<group>"; };
+		D21EDAD41901D48B0046B99E /* next.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = next.tiff; sourceTree = "<group>"; };
+		D21EDAD51901D48B0046B99E /* nextPressed.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = nextPressed.tiff; sourceTree = "<group>"; };
+		D26C1DEC1901775200B59088 /* libpython2.7.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libpython2.7.dylib; path = ../../../../../../System/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/config/libpython2.7.dylib; sourceTree = "<group>"; };
+		D2F6A7BE1901A0F800CDEE66 /* BashCommand.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BashCommand.h; sourceTree = "<group>"; };
+		D2F6A7BF1901A0F800CDEE66 /* BashCommand.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BashCommand.m; sourceTree = "<group>"; };
+		D2F6A7C11901AA6C00CDEE66 /* FoundationPlist.py */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.python; path = FoundationPlist.py; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		666278B216E627480054E8EB /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D26C1DED1901775200B59088 /* libpython2.7.dylib in Frameworks */,
+				666278B916E627480054E8EB /* Cocoa.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		666278AC16E627480054E8EB = {
+			isa = PBXGroup;
+			children = (
+				666278C016E627480054E8EB /* LoginLog */,
+				666278B716E627480054E8EB /* Frameworks */,
+				666278B616E627480054E8EB /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		666278B616E627480054E8EB /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				666278B516E627480054E8EB /* LoginLog.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		666278B716E627480054E8EB /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				D26C1DEC1901775200B59088 /* libpython2.7.dylib */,
+				666278B816E627480054E8EB /* Cocoa.framework */,
+				666278BC16E627480054E8EB /* Other Frameworks */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		666278BC16E627480054E8EB /* Other Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				666278BD16E627480054E8EB /* AppKit.framework */,
+				666278BE16E627480054E8EB /* CoreData.framework */,
+				666278BF16E627480054E8EB /* Foundation.framework */,
+			);
+			name = "Other Frameworks";
+			sourceTree = "<group>";
+		};
+		666278C016E627480054E8EB /* LoginLog */ = {
+			isa = PBXGroup;
+			children = (
+				6669207516E67FC800C1BD51 /* LLBorderlessWindow.h */,
+				6669207616E67FC800C1BD51 /* LLBorderlessWindow.m */,
+				D2F6A7BE1901A0F800CDEE66 /* BashCommand.h */,
+				D2F6A7BF1901A0F800CDEE66 /* BashCommand.m */,
+				666278CC16E627490054E8EB /* main.py */,
+				666278CE16E627490054E8EB /* LLAppDelegate.py */,
+				66C62FE016E64529002B7100 /* LLLogWindowController.py */,
+				D2F6A7C11901AA6C00CDEE66 /* FoundationPlist.py */,
+				666278D016E627490054E8EB /* MainMenu.xib */,
+				666278C116E627480054E8EB /* Supporting Files */,
+			);
+			path = LoginLog;
+			sourceTree = "<group>";
+		};
+		666278C116E627480054E8EB /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				05E7A08716E8DC0B00D2DEA6 /* LoginLog.iconset */,
+				D21EDAD41901D48B0046B99E /* next.tiff */,
+				D21EDAD51901D48B0046B99E /* nextPressed.tiff */,
+				D21EDAD21901C9920046B99E /* check.png */,
+				666278C216E627480054E8EB /* LoginLog-Info.plist */,
+				666278C316E627480054E8EB /* InfoPlist.strings */,
+				666278C616E627480054E8EB /* main.m */,
+				666278C816E627480054E8EB /* LoginLog-Prefix.pch */,
+				666278C916E627480054E8EB /* Credits.rtf */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		666278B416E627480054E8EB /* LoginLog */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 666278D516E627490054E8EB /* Build configuration list for PBXNativeTarget "LoginLog" */;
+			buildPhases = (
+				666278B116E627480054E8EB /* Sources */,
+				666278B216E627480054E8EB /* Frameworks */,
+				666278B316E627480054E8EB /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = LoginLog;
+			productName = LoginLog;
+			productReference = 666278B516E627480054E8EB /* LoginLog.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		666278AD16E627480054E8EB /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				CLASSPREFIX = LL;
+				LastUpgradeCheck = 0630;
+				ORGANIZATIONNAME = "Göteborgs universitet";
+				TargetAttributes = {
+					666278B416E627480054E8EB = {
+						DevelopmentTeam = 998Z9C32TC;
+					};
+				};
+			};
+			buildConfigurationList = 666278B016E627480054E8EB /* Build configuration list for PBXProject "LoginLog" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = 666278AC16E627480054E8EB;
+			productRefGroup = 666278B616E627480054E8EB /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				666278B416E627480054E8EB /* LoginLog */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		666278B316E627480054E8EB /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D21EDAD71901D48B0046B99E /* nextPressed.tiff in Resources */,
+				D21EDAD31901C9920046B99E /* check.png in Resources */,
+				666278C516E627480054E8EB /* InfoPlist.strings in Resources */,
+				666278CB16E627480054E8EB /* Credits.rtf in Resources */,
+				D21EDAD61901D48B0046B99E /* next.tiff in Resources */,
+				666278CD16E627490054E8EB /* main.py in Resources */,
+				666278CF16E627490054E8EB /* LLAppDelegate.py in Resources */,
+				D2F6A7C21901AA6C00CDEE66 /* FoundationPlist.py in Resources */,
+				666278D216E627490054E8EB /* MainMenu.xib in Resources */,
+				66C62FE116E64529002B7100 /* LLLogWindowController.py in Resources */,
+				05E7A08816E8DC0B00D2DEA6 /* LoginLog.iconset in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		666278B116E627480054E8EB /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				666278C716E627480054E8EB /* main.m in Sources */,
+				D2F6A7C01901A0F800CDEE66 /* BashCommand.m in Sources */,
+				6669207716E67FC800C1BD51 /* LLBorderlessWindow.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		666278C316E627480054E8EB /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				666278C416E627480054E8EB /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+		666278C916E627480054E8EB /* Credits.rtf */ = {
+			isa = PBXVariantGroup;
+			children = (
+				666278CA16E627480054E8EB /* en */,
+			);
+			name = Credits.rtf;
+			sourceTree = "<group>";
+		};
+		666278D016E627490054E8EB /* MainMenu.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				666278D116E627490054E8EB /* en */,
+			);
+			name = MainMenu.xib;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		666278D316E627490054E8EB /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "Developer ID Application: NATIONAL INSTITUTE OF MENTAL HEALTH (QZQALU4M8H)";
+				COPY_PHASE_STRIP = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
+					/System/Library/Frameworks/Python.framework/Versions/2.7/include/python2.7,
+				);
+				MACOSX_DEPLOYMENT_TARGET = 10.10;
+				ONLY_ACTIVE_ARCH = YES;
+				PROVISIONING_PROFILE = "";
+				SDKROOT = macosx;
+			};
+			name = Debug;
+		};
+		666278D416E627490054E8EB /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "Developer ID Application: NATIONAL INSTITUTE OF MENTAL HEALTH (QZQALU4M8H)";
+				COPY_PHASE_STRIP = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
+					/System/Library/Frameworks/Python.framework/Versions/2.7/include/python2.7,
+				);
+				MACOSX_DEPLOYMENT_TARGET = 10.10;
+				PROVISIONING_PROFILE = "";
+				SDKROOT = macosx;
+			};
+			name = Release;
+		};
+		666278D616E627490054E8EB /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_IDENTITY = "";
+				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "";
+				COMBINE_HIDPI_IMAGES = YES;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "LoginLog/LoginLog-Prefix.pch";
+				INFOPLIST_FILE = "LoginLog/LoginLog-Info.plist";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(SYSTEM_LIBRARY_DIR)/Frameworks/Python.framework/Versions/2.7",
+					"$(SYSTEM_LIBRARY_DIR)/Frameworks/Python.framework/Versions/2.7/lib/python2.7/config",
+				);
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Debug;
+		};
+		666278D716E627490054E8EB /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_IDENTITY = "";
+				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "";
+				COMBINE_HIDPI_IMAGES = YES;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "LoginLog/LoginLog-Prefix.pch";
+				INFOPLIST_FILE = "LoginLog/LoginLog-Info.plist";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(SYSTEM_LIBRARY_DIR)/Frameworks/Python.framework/Versions/2.7",
+					"$(SYSTEM_LIBRARY_DIR)/Frameworks/Python.framework/Versions/2.7/lib/python2.7/config",
+				);
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		666278B016E627480054E8EB /* Build configuration list for PBXProject "LoginLog" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				666278D316E627490054E8EB /* Debug */,
+				666278D416E627490054E8EB /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		666278D516E627490054E8EB /* Build configuration list for PBXNativeTarget "LoginLog" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				666278D616E627490054E8EB /* Debug */,
+				666278D716E627490054E8EB /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 666278AD16E627480054E8EB /* Project object */;
+}
