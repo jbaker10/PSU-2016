@@ -1,7 +1,7 @@
 # PSU-2016
 This repo contains the presentation materials for the "Laziness is the Mother of Efficiency, or How We Automated Ourselves Out of Jobs and Into Careers" given at the MacAdmins at Penn State conference.
 
-## macReporter.py
+## Mac Reporter
 The python script is within the macReporter directory.
 
 ## LANrev-PlanB
