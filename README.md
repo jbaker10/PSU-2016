@@ -8,7 +8,7 @@ The python script is within the macReporter directory.
 The PlanB binary and lanrev_health_check script are in the LANrev-PlanB directory.
 
 ## OS-X-LiteTouch
-This contains the Imaging and Enrollment applications. For more documentation on the OS-X-LiteTouch process, see 
+This contains the Imaging and Enrollment applications. For more documentation on the OS-X-LiteTouch process, see [https://github.com/jbaker10/PSU-2016/wiki/OS-X-LiteToch](https://github.com/jbaker10/PSU-2016/wiki/OS-X-LiteToch)
 
 ## LANrevImporter
 [https://github.com/jbaker10/LANrevImporter](https://github.com/jbaker10/LANrevImporter)
