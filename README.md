@@ -20,7 +20,7 @@ This contains the Imaging and Enrollment applications. For more documentation on
 [https://github.com/lindegroup/AutoPkgr](https://github.com/lindegroup/AutoPkgr)
 
 ## AutoPkg
-[https://github.com/autopkg/autopkg](https://github.com/autopkg/autopkg)
+[https://autopkg.github.io/autopkg/](https://autopkg.github.io/autopkg/)
 
 ## All video demos from the session
 [http://bit.ly/290v9Rv](http://bit.ly/290v9Rv)
