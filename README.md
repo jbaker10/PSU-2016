@@ -18,3 +18,6 @@ This contains the Imaging and Enrollment applications. For more documentation on
 
 ## AutoPkgr
 [https://github.com/lindegroup/AutoPkgr](https://github.com/lindegroup/AutoPkgr)
+
+## All video demos from the session
+[https://www.dropbox.com/sh/0aail1ce2vlfdvo/AACUaT4P5tlLThDLq8ZJy30pa?dl=0](https://www.dropbox.com/sh/0aail1ce2vlfdvo/AACUaT4P5tlLThDLq8ZJy30pa?dl=0)
