@@ -1,0 +1,30 @@
+{
+  "DVTSourceControlWorkspaceBlueprintPrimaryRemoteRepositoryKey" : "68AE9B1780E238F530E23CDFE37EB9AA6166FB59",
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyRepositoryLocationsKey" : {
+
+  },
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyStatesKey" : {
+    "E1F57AB691D0B7361FD8F3DE52CCFCE35532C4ED" : 0,
+    "68AE9B1780E238F530E23CDFE37EB9AA6166FB59" : 0
+  },
+  "DVTSourceControlWorkspaceBlueprintIdentifierKey" : "3F6CF5E6-3C66-4BAF-AD9F-116E5819E6D6",
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyPathsKey" : {
+    "E1F57AB691D0B7361FD8F3DE52CCFCE35532C4ED" : "",
+    "68AE9B1780E238F530E23CDFE37EB9AA6166FB59" : "PlanB-PSU\/"
+  },
+  "DVTSourceControlWorkspaceBlueprintNameKey" : "planb",
+  "DVTSourceControlWorkspaceBlueprintVersion" : 204,
+  "DVTSourceControlWorkspaceBlueprintRelativePathToProjectKey" : "planb.xcodeproj",
+  "DVTSourceControlWorkspaceBlueprintRemoteRepositoriesKey" : [
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/github.nimh.nih.gov\/bakerjr\/PlanB.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "68AE9B1780E238F530E23CDFE37EB9AA6166FB59"
+    },
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/github.nimh.nih.gov\/bakerjr\/PSU.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "E1F57AB691D0B7361FD8F3DE52CCFCE35532C4ED"
+    }
+  ]
+}

@@ -1,0 +1,28 @@
+#!/bin/sh
+
+## Try unloading and removing LD before installing
+
+loaded=`launchctl list | grep com.github.jbaker10.planb`
+if [[ $loaded ]]; then
+	launchctl unload /Library/LaunchDaemons/com.github.jbaker10.planb.plist
+fi
+
+exists=`ls -la /Library/LaunchDaemons/ | grep com.github.jbaker10.planb`
+if [[ $exists ]]; then
+	rm -rf /Library/LaunchDaemons/com.github.jbaker10.planb.plist
+fi
+
+## Remove the planb binary if it exists
+if [[ -f /usr/local/sbin/planb ]]; then
+	rm -rf /usr/local/sbin/planb
+fi
+
+## Remove the abman_health_check script if it exists
+if [[ -f /usr/local/sbin/abman_health_check ]]; then
+	rm -rf /usr/local/sbin/abman_health_check
+fi
+
+## Remove the lanrev_health_check script if it exists
+if [[ -f /usr/local/sbin/lanrev_health_check ]]; then
+	rm -rf /usr/local/sbin/lanrev_health_check
+fi

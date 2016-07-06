@@ -1,0 +1,505 @@
+#!/usr/bin/python
+""" This script will check the health of the LANrev 
+ agent and run the planb binary if deemed necessary """
+
+Copyright 2016 Jeremiah Baker.
+
+# Licensed under the Apache License, 
+# Version 2.0 (the "License"); you may not 
+# use this file except in compliance with 
+# the License. 
+# You may obtain a copy of the License at:
+# http://www.apache.org/licenses/LICENSE-2.0
+
+# Unless required by applicable law or agreed 
+# to in writing, software distributed under 
+# the License is distributed on an "AS IS" 
+# BASIS, WITHOUT WARRANTIES OR CONDITIONS OF 
+# ANY KIND, either express or implied. See 
+# the License for the specific language 
+# governing permissions and limitations under 
+# the License.
+
+import time
+import datetime
+import logging
+import os
+import os.path
+import plistlib
+import smtplib
+import socket
+import subprocess
+import sys
+from string import Template
+from email.mime.multipart import MIMEMultipart
+from email.mime.text import MIMEText
+
+####################################################
+##
+##
+##  Below are the variables that should be filled in
+##         with your appropriate information
+##
+##
+####################################################
+
+####################################################
+
+TO_ADDRESS = "someone@somehwere.come"  ## Email address for notification to be sent to, change as needed
+FROM_ADDRESS = "someone@somewhere.com"     ## Email address for notification to be sent from, change as needed
+MAIL_SERVER = "mailfwd.somewhere.com"        ## Email server that will be used to send the email, server should not require authentication
+
+PLIST_REMOTE_LOCATION = "https://somewhere.com/pkgs/DefaultDefaults.plist"  ## Edit this string to point to whatever url you want
+
+LANrev_agent_vers = "7.2"  ## Edit the version as needed and AbMan is updated
+
+
+logging.basicConfig(level=logging.DEBUG, filename="/var/log/com.somewhere.planb.log", filemode="a+", format="%(asctime)-15s %(levelname)-8s %(message)s")
+####################################################
+
+# LANrev pref plists paths
+KNOWN_GOOD_PREFS_LOCAL = "/var/tmp/DefaultDefaults.plist"
+CURRENT_AGENT_PREFS_LOCAL = "/Library/Preferences/com.poleposition-sw.lanrev_agent.plist"
+
+# Path to PlanB binary
+PLANB = "/usr/local/sbin/planb"
+
+# Date variables
+CURRENT_DATE = (datetime.date.today())
+TIME = (datetime.datetime.now().time())
+CURRENT_HOUR = TIME.hour
+LAST_HOUR = CURRENT_HOUR - 1
+
+# Get system hostname
+HOSTNAME = (socket.gethostname())
+
+# Global LANrev variables
+LANrev_folder = "/Library/Application Support/LANrev Agent/"
+LANrev_agent_binary = "/Library/Application Support/LANrev Agent/LANrev Agent.app/Contents/MacOS/LANrev Agent"
+LANrev_logs_path = "/Library/Logs/LANrev Agent.log"
+# Will likely need to remember to update this when pushing out clients, or we could run into some issues
+# What would be better is to dynamically pull this value, maybe from a server
+
+####################################################
+
+if os.geteuid() != 0:
+    sys.exit("This Script Must Be Run As Root")
+
+def bashCommand(script):
+    try:
+        return subprocess.check_output(script)
+    except (subprocess.CalledProcessError, OSError), err:
+        return "[* Error] **%s** [%s]" % (err, str(script))
+
+def enable_debug_logging():
+    logging.info("Enabling agent debug mode... Please be patient.")
+    bashCommand(["/usr/bin/defaults", "write", "/Library/Preferences/com.poleposition-sw.lanrev_agent", "DefaultLogLevel", "6"])
+    bashCommand(["/bin/launchctl", "unload", "/Library/LaunchDaemons/com.poleposition-sw.LANrevAgent.plist"])
+    bashCommand(["/bin/launchctl", "load", "/Library/LaunchDaemons/com.poleposition-sw.LANrevAgent.plist"])
+    time.sleep(120) # This allows for the the agent to run all of it's first-launch processes so as to not be busy when we run our check
+
+def disable_debug_logging():
+    logging.info("Disabling agent debug mode...")
+    bashCommand(["/usr/bin/defaults", "write", "/Library/Preferences/com.poleposition-sw.lanrev_agent", "DefaultLogLevel", "5"])
+    bashCommand(["/bin/launchctl", "unload", "/Library/LaunchDaemons/com.poleposition-sw.LANrevAgent.plist"])
+    bashCommand(["/bin/launchctl", "load", "/Library/LaunchDaemons/com.poleposition-sw.LANrevAgent.plist"])
+
+def check_lanrev_components():
+    global error
+    if not os.path.isdir(LANrev_folder):
+        error = "The LANrev folder was missing from the system"
+        bashCommand(PLANB)
+        sendEmail(TO_ADDRESS)
+        disable_debug_logging()
+        sys.exit()
+    elif not os.path.isfile(LANrev_agent_binary):
+        error = "The LANrev binary was missing"
+        bashCommand(PLANB)
+        sendEmail(TO_ADDRESS)
+        disable_debug_logging()
+        sys.exit()
+    else:
+        logging.info("All primary LANrev components are in place. Moving onto errors in the log.")
+
+def check_logs():
+    global error
+    log_temp = open(LANrev_logs_path, 'r')
+    LANrev_log_lines = log_temp.readlines()
+    log_temp.close()
+    for line in LANrev_log_lines:
+        yesterday = CURRENT_DATE + datetime.timedelta(days=-1)
+        #date = datetime.datetime.strptime("".join(re.split('-| ', line)[0:3]), "%Y%m%d")
+        #if date < (datetime.datetime.today() + datetime.timedelta(days=1)): ## Will need to decide how long in the log we should check, anything longer than 1 day and we risk PlanB picking up the same error more than once and reinstalling unecessarily
+        if (str(CURRENT_DATE) + " " + str(LAST_HOUR)) in line or (str(CURRENT_DATE) + " " + str(CURRENT_HOUR)) in line:
+            ## Can add more if statements here to look for other errors in the log as needed
+            if "WARNING: LANrev Agent code signature not valid: /Library/Application Support/LANrev Agent/LANrev Agent.app" in line:
+                error = line
+                logging.info(line)
+                bashCommand(PLANB)
+                sendEmail(TO_ADDRESS)
+                disable_debug_logging()
+                sys.exit()
+    print "The logs look clean. Checking if LANrev agent is up to date."
+
+def check_agent_vers(): ## This function compares the agent vers on the system with that defined in the script
+    global error
+    actual_agent_vers = float(bashCommand(["defaults", "read", "/Library/Application Support/LANrev Agent/LANrev Agent.app/Contents/Info", "CFBundleShortVersionString"]))
+    if (str(actual_agent_vers) != LANrev_agent_vers):
+        logging.info("Agent is out of date")
+        ## Check if temp file exists, if not create it
+        if not os.path.isfile("/var/tmp/planb.txt"):
+            tmp_file = open("/var/tmp/planb.txt", "w")
+            tmp_file.close()
+
+        yesterday = CURRENT_DATE + datetime.timedelta(days=-1)
+        two_days = CURRENT_DATE + datetime.timedelta(days=-2)
+        three_days = CURRENT_DATE + datetime.timedelta(days=-3)
+        if str(yesterday) and str(two_days) and str(three_days) in open("/var/tmp/planb.txt").read():
+            bashCommand(["/bin/rm", "-f", "/var/tmp/planb.txt"])
+            logging.info("Running PlanB and resetting temp file")
+            error = "The agent was out of date, and failed 3 times to update itself."
+            bashCommand(PLANB)
+            sendEmail(TO_ADDRESS)
+            disable_debug_logging()
+            sys.exit()
+        else:
+            logging.info("Will try to run software check using the current agent before using PlanB")
+            tmp_file = open("/var/tmp/planb.txt", "a")
+            bashCommand(["/Library/Application Support/LANrev Agent/LANrev Agent.app/Contents/MacOS/LANrev Agent", "--SDCheck"])
+            ## Will write out to file that we tried to update the agent with LANrev before running planB. After 3 unsuccesful runs, PlanB will be triggered
+            tmp_file.write("Ran LANrev agent on " + str(CURRENT_DATE) + "\n")
+            tmp_file.close()
+    else:
+        logging.info("The Agent is up to date with what is defined in this script: %s" % LANrev_agent_vers)
+
+def check_apple_updates():
+    global error
+    log_temp = open(LANrev_logs_path, 'r')
+    LANrev_log_lines = log_temp.readlines()
+    log_temp.close()
+    bashCommand(["/Library/Application Support/LANrev Agent/LANrev Agent.app/Contents/MacOS/LANrev Agent", "--GetMissingPatchList", "stdout"])
+    for line in LANrev_log_lines:
+        if (str(CURRENT_DATE) + " " + str(LAST_HOUR)) in line or (str(CURRENT_DATE) + " " + str(CURRENT_HOUR)) in line:
+            ## Can add more if statements here to look for other errors in the log as needed
+            if "Unknown error occurred while checking for Apple software updates:" in line:
+                error = line
+                print line
+                bashCommand(PLANB)
+                sendEmail(TO_ADDRESS)
+                disable_debug_logging()
+                sys.exit()
+    logging.info("The Apple software update check seemed to work fine.")
+
+def check_default_defaults(plistlocation):
+    ## Rather than run PlanB, this function will just correct the agent prefs on the system
+    ## We might be able to add a hash check here so that we dont always pull a new file for no reason
+    bashCommand(["/usr/bin/curl", "-o", KNOWN_GOOD_PREFS_LOCAL, plistlocation, "--silent"])
+    bashCommand(["/usr/bin/plutil", "-convert", "xml1", KNOWN_GOOD_PREFS_LOCAL])
+    bashCommand(["/usr/bin/plutil", "-convert", "xml1", CURRENT_AGENT_PREFS_LOCAL])
+    known_good_prefs_plist = plistlib.readPlist(KNOWN_GOOD_PREFS_LOCAL)
+    current_agent_prefs_plist = plistlib.readPlist(CURRENT_AGENT_PREFS_LOCAL)
+
+    if known_good_prefs_plist["CheckAppleSoftwarePatches"] != current_agent_prefs_plist["CheckAppleSoftwarePatches"]:
+        logging.info("The current CheckAppleSoftwarePatches settings are incorrect, setting to '%s'" % known_good_prefs_plist["CheckAppleSoftwarePatches"])
+        current_agent_prefs_plist["CheckAppleSoftwarePatches"] = known_good_prefs_plist["CheckAppleSoftwarePatches"]
+        plistlib.writePlist(current_agent_prefs_plist, CURRENT_AGENT_PREFS_LOCAL)
+        bashCommand(["/bin/launchctl", "unload", "/Library/LaunchDaemons/com.poleposition-sw.LANrevAgent.plist"])
+        bashCommand(["/bin/launchctl", "load", "/Library/LaunchDaemons/com.poleposition-sw.LANrevAgent.plist"])
+
+    if known_good_prefs_plist["SDServerAddress"] != current_agent_prefs_plist["SDServerAddress"]:
+        logging.info("The current SDServerAddress settings are incorrect, setting to '%s'" % known_good_prefs_plist["SDServerAddress"])
+        current_agent_prefs_plist["SDServerAddress"] = known_good_prefs_plist["SDServerAddress"]
+        plistlib.writePlist(current_agent_prefs_plist, CURRENT_AGENT_PREFS_LOCAL)
+        bashCommand(["/bin/launchctl", "unload", "/Library/LaunchDaemons/com.poleposition-sw.LANrevAgent.plist"])
+        bashCommand(["/bin/launchctl", "load", "/Library/LaunchDaemons/com.poleposition-sw.LANrevAgent.plist"])
+
+    if known_good_prefs_plist["SLServerAddress"] != current_agent_prefs_plist["SLServerAddress"]:
+        logging.info("The current SLServerAddress settings are incorrect, setting to '%s'" % known_good_prefs_plist["SLServerAddress"])
+        current_agent_prefs_plist["SLServerAddress"] = known_good_prefs_plist["SLServerAddress"]
+        plistlib.writePlist(current_agent_prefs_plist, CURRENT_AGENT_PREFS_LOCAL)
+        bashCommand(["/bin/launchctl", "unload", "/Library/LaunchDaemons/com.poleposition-sw.LANrevAgent.plist"])
+        bashCommand(["/bin/launchctl", "load", "/Library/LaunchDaemons/com.poleposition-sw.LANrevAgent.plist"])
+
+    if known_good_prefs_plist["ServerList"][0]["ServerAddress"] != current_agent_prefs_plist["ServerList"][0]["ServerAddress"]:
+        logging.info("The current ServerAddress settings are incorrect, setting to '%s'" % known_good_prefs_plist["ServerList"][0]["ServerAddress"])
+        current_agent_prefs_plist["ServerList"][0]["ServerAddress"] = known_good_prefs_plist["ServerList"][0]["ServerAddress"]
+        plistlib.writePlist(current_agent_prefs_plist, CURRENT_AGENT_PREFS_LOCAL)
+        bashCommand(["/bin/launchctl", "unload", "/Library/LaunchDaemons/com.poleposition-sw.LANrevAgent.plist"])
+        bashCommand(["/bin/launchctl", "load", "/Library/LaunchDaemons/com.poleposition-sw.LANrevAgent.plist"])
+
+    bashCommand(["/usr/bin/plutil", "-convert", "binary1", CURRENT_AGENT_PREFS_LOCAL])
+    logging.info("The defined defaults values are up to date.")
+
+
+###### Need to edit the email
+def sendEmail(addresses):
+    htmlEmail = Template("""<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+    <html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+    <meta name="viewport" content="width=device-width" />
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title>Really Simple HTML Email Template</title>
+    <style>
+    /* -------------------------------------
+        GLOBAL
+    ------------------------------------- */
+    * {
+      margin: 0;
+      padding: 0;
+      font-family: "Helvetica Neue", "Helvetica", Helvetica, Arial, sans-serif;
+      font-size: 100%;
+      line-height: 1.6;
+    }
+    img {
+      max-width: 100%;
+    }
+    body {
+      -webkit-font-smoothing: antialiased;
+      -webkit-text-size-adjust: none;
+      width: 100%!important;
+      height: 100%;
+    }
+    /* -------------------------------------
+        ELEMENTS
+    ------------------------------------- */
+    a {
+      color: #348eda;
+    }
+    .btn-primary {
+      text-decoration: none;
+      color: #FFF;
+      background-color: #348eda;
+      border: solid #348eda;
+      border-width: 10px 20px;
+      line-height: 2;
+      font-weight: bold;
+      margin-right: 10px;
+      text-align: center;
+      cursor: pointer;
+      display: inline-block;
+      border-radius: 25px;
+    }
+    .btn-secondary {
+      text-decoration: none;
+      color: #FFF;
+      background-color: #aaa;
+      border: solid #aaa;
+      border-width: 10px 20px;
+      line-height: 2;
+      font-weight: bold;
+      margin-right: 10px;
+      text-align: center;
+      cursor: pointer;
+      display: inline-block;
+      border-radius: 25px;
+    }
+    .last {
+      margin-bottom: 0;
+    }
+    .first {
+      margin-top: 0;
+    }
+    .padding {
+      padding: 10px 0;
+    }
+    /* -------------------------------------
+        BODY
+    ------------------------------------- */
+    table.body-wrap {
+      width: 100%;
+      padding: 20px;
+    }
+    table.body-wrap .container {
+      border: 1px solid #f0f0f0;
+    }
+    /* -------------------------------------
+        FOOTER
+    ------------------------------------- */
+    table.footer-wrap {
+      width: 100%;  
+      clear: both!important;
+    }
+    .footer-wrap .container p {
+      font-size: 12px;
+      color: #666;
+      
+    }
+    table.footer-wrap a {
+      color: #999;
+    }
+    /* -------------------------------------
+        TYPOGRAPHY
+    ------------------------------------- */
+    h1, h2, h3 {
+      font-family: "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
+      color: #000;
+      margin: 40px 0 10px;
+      line-height: 1.2;
+      font-weight: 200;
+    }
+    h1 {
+      font-size: 36px;
+    }
+    h2 {
+      font-size: 28px;
+    }
+    h3 {
+      font-size: 22px;
+    }
+    p, ul, ol {
+      margin-bottom: 10px;
+      font-weight: normal;
+      font-size: 14px;
+    }
+    ul li, ol li {
+      margin-left: 5px;
+      list-style-position: inside;
+    }
+    /* ---------------------------------------------------
+        RESPONSIVENESS
+        Nuke it from orbit. It's the only way to be sure.
+    ------------------------------------------------------ */
+    /* Set a max-width, and make it display as block so it will automatically stretch to that width, but will also shrink down on a phone or something */
+    .container {
+      display: block!important;
+      max-width: 600px!important;
+      margin: 0 auto!important; /* makes it centered */
+      clear: both!important;
+    }
+    /* Set the padding on the td rather than the div for Outlook compatibility */
+    .body-wrap .container {
+      padding: 20px;
+    }
+    /* This should also be a block element, so that it will fill 100% of the .container */
+    .content {
+      max-width: 600px;
+      margin: 0 auto;
+      display: block;
+    }
+    /* Let's make sure tables in the content area are 100% wide */
+    .content table {
+      width: 100%;
+    }
+    /* Database Styles */
+    .ToadExtensionTableContainer {
+      padding: 0px;
+      border: 6px solid #348eda;
+      -moz-border-radius: 8px;
+      -webkit-border-radius: 8px;
+      -khtml-border-radius: 8px;
+      border-radius: 8px;
+      overflow: auto;
+    }
+    .ToadExtensionTable {
+      width: 100%;
+      border: 0px;
+      border-collapse: collapse;
+      font-family: Arial, Tahoma, Verdana, "Times New Roman", Georgia, Serif;
+      font-size: 12px;
+      padding: 1px;
+      border: 1px solid #fff;
+    }
+    th {
+      padding: 2px 4px;
+      border: 1px solid #fff;
+    }
+    td {
+      padding: 2px 4px;
+      border: 1px solid #fff;
+    }
+    .HeaderColumnEven {
+      background: #75b2e6;
+      color: #fff;
+    }
+    .HeaderColumnOdd {
+      background: #348eda;
+      color: #fff;
+    }
+    .R0C0 {
+      background: #F3FAFC;
+    }
+    .R0C1 {
+      background: #E1EEFA;
+    }
+    .R1C0 {
+      background: #CFE9F2;
+    }
+    .R1C1 {
+      background: #B3DCEB;
+    }
+    .lft {
+      text-align: left;
+    }
+    .rght {
+      text-align: right;
+    }
+    .cntr {
+      text-align: center;
+    }
+    .jstf {
+      text-align: justify;
+    }
+    .nowrap {
+      white-space: nowrap;
+    }
+    </style>
+    </head>
+    <body bgcolor="#f6f6f6">
+    <!-- body -->
+    <table class="body-wrap" bgcolor="#f6f6f6">
+      <tr>
+        <td class="container" bgcolor="#FFFFFF">
+          <!-- content -->
+          <div class="content">
+          <table>
+            <tr>
+              <td>
+                <h1>PlanB was triggered on the following Client: <b>${HOSTNAME}</b></h1>
+                <h2>This occurred on <b>${CURRENT_DATE}</b></h2>
+                <br>
+                <p>The error that caused this was:</p>
+                <p><b>${error}</b></p>
+                <br>
+              </td>
+            </tr>
+          </table>
+          </div>
+      </tr>
+    </table>
+    <!-- /body -->
+    </body>
+    </html>""").substitute(HOSTNAME=HOSTNAME, CURRENT_DATE=CURRENT_DATE, error=error)
+
+    htmlEmail = htmlEmail
+    msg = MIMEMultipart('alternative')
+    msg['Subject'] = 'PlanB was triggered on %s' % HOSTNAME
+    msg['From'] = FROM_ADDRESS
+    msg['To'] = addresses
+    
+    text = "PlanB was triggered"
+    # Record the MIME types of both parts - text/plain and text/html.
+    part1 = MIMEText(text, 'plain')
+    part2 = MIMEText(htmlEmail, 'html')
+
+    # Attach parts into message container.
+    # According to RFC 2046, the last part of a multipart message, in this case
+    # the HTML message, is best and preferred.
+    msg.attach(part1)
+    msg.attach(part2)    
+
+    s = smtplib.SMTP(MAIL_SERVER)
+    s.sendmail(addresses, addresses, msg.as_string())
+    s.quit()
+
+def main():
+    logging.info("Beginning LANrev agent health check...")
+    check_lanrev_components()
+    enable_debug_logging()
+    check_logs()
+    check_agent_vers()
+    check_apple_updates()
+    check_default_defaults(PLIST_REMOTE_LOCATION)
+    disable_debug_logging()
+
+if __name__ == "__main__":
+    main()
